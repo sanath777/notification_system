@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="assets/jquery.js"></script>
+<script src="assets/ajax.js"></script>
+<script>
+function send_data(){
+      var email=$("#email").val();
+      var password=$("#password").val();
+      var city=$("#city").val();
+      var phone=$("#phone").val();
+      var name=$("#name").val();
+      var year=$("#year").val();
+      var datastring='password='+ password+'&email='+ email+'&phone='+ phone+'&city='+city+'&year='+year+'&name='+name; 
+      if(password =='' || email=='' || name=='' || year==''){
+        alert("Input Field Missing");
+    }
+    else{
+         $.ajax({
+            url: "signup.php",
+            type: "POST",
+            dataType:"json",
+            encode:true,
+            data:datastring,   
+            cache: false,
+            success: function(data)
+            {   
+                if(data.type != 'error')
+                {
+                     location.href="login.html";
+
+                }else{
+                    alert(data.text);
+                }
+            },
+            error: function() 
+            {
+                alert("*please check your connection and try again");
+            }           
+     });
+  }
+}
+</script>
+<style>
+body {font-family: Arial, sans-serif;}
+form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: blue;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 150px;
+}
+
+.container {
+  padding: 70px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+}
+</style>
+</head>
+<body>
+<h2 style="text-align: center;font-size: 28px">Student Login Form</h2>
+  <div class="container">
+    <label><b>Students Name   (*must be in small letters)</b></label>
+    <input type="text"  id="name" placeholder="Without Spaces(Use '_')"name="name"/>
+    <label><b>E-mail</b></label>
+    <input type="text" placeholder="example123@xyz.com" id="email" name="email"/>
+    <label><b>Phone Number</b></label>
+    <input type="text" id="phone" name="phone"/>
+    <label><b>Year</b></label>
+    <input type="text" id="year" name="year"/>
+    <label><b>City</b></label>
+    <input type="text" id="city" name="city"/>
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="password" name="password"/>
+    <button type="submit" onclick="send_data();">Login</button>
+  </div>
+</body>
+</html>
